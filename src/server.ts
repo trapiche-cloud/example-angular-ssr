@@ -1,6 +1,7 @@
 import { APP_BASE_HREF } from '@angular/common'
 import { CommonEngine } from '@angular/ssr/node'
 import express from 'express'
+import { pathToFileURL } from 'node:url'
 import { fileURLToPath } from 'node:url'
 import { dirname, join, resolve } from 'node:path'
 import bootstrap from './main.server'
@@ -38,4 +39,7 @@ function run(): void {
   })
 }
 
-run()
+const isMainModule = import.meta.url === pathToFileURL(process.argv[1]).href
+if (isMainModule) {
+  run()
+}
